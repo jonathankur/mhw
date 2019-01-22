@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+	<title>Nutra Ventures</title>
+ <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<script src="phonegap.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="jquery.mobile-1.4.5.min.js"></script>
+<style type="text/css">
+.embord {
+  border:2px solid navy;
+}
+
+</style>
+	<script type="text/javascript">
+
+var thissendto=0;
+var shpcat=0;
+var thisitem=0;
+var me=0;
+var photopage=1;
+var keeptrying=6;
+var mymood=0;
+var myfeeltxt='';
+var todobox='';
+var thisday='';
+var thisstart=0;
+var thisremind=0;
+
+
+  var notificationOpenedCallback = function(jsonData) {
+  };
+
+
+function getonestatus()
+{   window.plugins.OneSignal
+    .startInit("03de48cd-4a34-4874-bc5a-47f405890489")
+    .handleNotificationOpened(notificationOpenedCallback)
+    .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
+    .endInit();
+
+  window.plugins.OneSignal.getPermissionSubscriptionState(function(status) {
+      var ss = status.subscriptionStatus.userId;
+     if ((ss!=null) && (ss.length>0)) savePush(ss);
+      else {
+       if (--keeptrying>0)
+         setTimeout(getonestatus(),1000);
+      }
+  }); 
+}
+
+function savePush(s)
+{ url='http://famclub.com.au/savepush.php?pushid='+s+'&id='+me;
+  $.ajax({url: url, 
+    success : function(result) {
+    }
+  });
+}
+
+function asubmit()
+{ var url='http://famclub.com.au/asave.php';
+  var data = {
+     member : me,
+     family : thisfam,
+     qlist : $("#qlist").val(),
+     why : $("#why").val()
+  };
+  $.post(url,data)
+  .done(function(result) {
+     goact();
+  });
+}
+
+
+$(document).ready(function () {
+   var lme='';
+   try {
+    lme = window.localStorage.getItem('me');
+    if (!lme) lme='';
+  }
+  catch (err) {
+
+  }
+  if (lme.length) {
+    me=lme;
+    showmenu();
+  }
+ 
+});
+
+function jlogout()
+{  
+window.localStorage.removeItem('me');
+ me='';
+   jQuery.mobile.changePage("#intropage", {transition: "flip"});
+}
+
+
+function showmenu()
+{  
+   $("#showmyname").html(window.localStorage.getItem('myname')); 
+   jQuery.mobile.changePage("#menupage", {transition: "flip"});
+}
+
+
+
+function hideerr()
+{ $("#err").hide();
+}
+
+
+function jlogin()
+{  url='http://theparcelpeople.com.au/catalogue/server/nvlogin.php?params='+encodeURIComponent($("#email").val()+'^'+$("#pwd").val());
+   $.ajax({url: url, 
+    success : function(result) {
+       var r = result.split('~');
+       if (r[0]=='s') {
+           window.localStorage.setItem('me',r[1]);
+           window.localStorage.setItem('myname',r[2]);
+           me=r[1];		
+           showmenu();
+       }
+       if (r[0]=='e') {
+         $("#err").html(r[1]);
+         $("#err").show();
+         setTimeout(hideerr,1500);
+       }
+    }
+   });
+}
+
+</script>
+<style type="text/css">
+.ui-panel-inner { 
+  padding: 0 !important;
+}
+</style>
+</head>
+<body>
+
+<div data-role="page" id="intropage" class="mypg myback">
+
+ <div role="main" class="ui-content myback">
+
+<p><input type="email" name="email" id="email" placeholder="User Name"></p>
+<p><input type="password" name="pwd" id="pwd" placeholder="Password"></p>
+<p>
+<a href="javascript:jlogin()" class="ui-btn ui-corner-all">LOG IN</a>
+<br>
+<div id="err" style="color:white; background-color:red; padding:3px;display:none">Error</div>
+<br>
+</div>
+</div>
+
+<div data-role="page" id="menupage" class="mypg myback">
+ <div role="main" class="ui-content myback">
+ <a href="javascript:jlogout()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-right">Close</a>
+<center>
+<a href="javascript:invite();" class="ui-btn ui-corner-all">CURRENT ORDERS</a>
+<a href="javascript:invite();" class="ui-btn ui-corner-all">PURCHASE ORDERS</a>
+<a href="javascript:invite();" class="ui-btn ui-corner-all">PENDING STOCK ORDERS</a>
+<a href="javascript:invite();" class="ui-btn ui-corner-all">FINAL STOCK ORDERS</a>
+</div>
+</div>
+
+</body>
+</html>
