@@ -6,7 +6,7 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>Nutra Ventures</name>
+    <name>MHW Suppliers</name>
 
     <description>
         Supplier Portal
@@ -43,32 +43,6 @@
 <splash src="res/screen/ios/Default@3x~iphone~comany.png"/>
 <splash src="res/screen/ios/Default@2x~ipad~anyany.png"/>
 <splash src="res/screen/ios/Default@2x~ipad~comany.png"/>
- <!--  Storyboard landscape  -->
- <!--
-
-        <splash src="res/screen/ios/Default@2x~iphone~comcom.png"/>
-        <splash src="res/screen/ios/Default@3x~iphone~anycom.png"/>
-        
--->
- <!--  Legacy portrait  -->
- <!--
-
-        <splash src="res/screen/ios/Default~iphone.png" width="320" height="480"/>
-        <splash src="res/screen/ios/Default@2x~iphone.png" width="640" height="960"/>
-        <splash src="res/screen/ios/Default-Portrait~ipad.png" width="768" height="1024"/>
-        <splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
-        <splash src="res/screen/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
-        <splash src="res/screen/ios/Default-667h.png" width="750" height="1334"/>
-        <splash src="res/screen/ios/Default-736h.png" width="1242" height="2208"/>
-        
--->
- <!--  Legacy landscape  -->
- <!--
-
-        <splash src="res/screen/ios/Default-Landscape~ipad.png" width="1024" height="768"/>
-        <splash src="res/screen/ios/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
-        
--->
 </platform>
 <platform name="android">
 <preference name="SplashMaintainAspectRatio" value="true"/>
@@ -86,35 +60,7 @@
 <splash density="port-xhdpi" src="res/screen/android/splash-port-xhdpi.png"/>
 <splash density="port-xxhdpi" src="res/screen/android/splash-port-xxhdpi.png"/>
 <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png"/>
- <!--  Landscape  -->
- <!--
-
-        <splash density="land-ldpi" src="res/screen/android/splash-land-ldpi.png"/>
-        <splash density="land-mdpi" src="res/screen/android/splash-land-mdpi.png"/>
-        <splash density="land-hdpi" src="res/screen/android/splash-land-hdpi.png"/>
-        <splash density="land-xhdpi" src="res/screen/android/splash-land-xhdpi.png"/>
-        <splash density="land-xxhdpi" src="res/screen/android/splash-land-xxhdpi.png"/>
-        <splash density="land-xxxhdpi" src="res/screen/android/splash-land-xxxhdpi.png"/>
-        
--->
 </platform>
- <!--
-
-    <platform name="windows">
-        <icon src="res/icon/windows/storelogo.png" target="StoreLogo"/>
-        <icon src="res/icon/windows/smalllogo.png" target="Square30x30Logo"/>
-        <icon src="res/icon/windows/Square44x44Logo.png" target="Square44x44Logo"/>
-        <icon src="res/icon/windows/Square70x70Logo.png" target="Square70x70Logo"/>
-        <icon src="res/icon/windows/Square71x71Logo.png" target="Square71x71Logo"/>
-        <icon src="res/icon/windows/Square150x150Logo.png" target="Square150x150Logo"/>
-        <icon src="res/icon/windows/Square310x310Logo.png" target="Square310x310Logo"/>
-
-        <splash src="res/screen/windows/splashscreen.png" target="SplashScreen"/>
-        <splash src="res/screen/windows/splashscreenphone.png" target="SplashScreenPhone"/>
-    </platform>
-    
--->
-<plugin name="onesignal-cordova-plugin" source="npm" />
 
 <!-- Requires cli-8.0.0 but we recommend using the latest version. -->
 <preference name="phonegap-version" value="cli-8.0.0" />
@@ -122,13 +68,6 @@
 <preference name="android-build-tool" value="gradle" />
 <preference name="android-minSdkVersion" value="16" />
 
-<!-- Can omit if not targetting Windows Phone -->
-<preference name="windows-appx-target" value="8.1-phone" />
-<preference name="WindowsToastCapable" value="true" />
-<plugin name="cordova-plugin-camera">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
-    </plugin>
 <plugin name="cordova-plugin-splashscreen" source="npm" />
 <plugin name="cordova-plugin-whitelist" source="npm" />
   <plugin name="cordova-android-support-gradle-release" source="npm">
@@ -137,10 +76,5 @@
 
 <access origin="http://code.jquery.com" subdomains="true" />
 <access origin="http://theparcelpeople.com.au" subdomains="true" />
-<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>Add selfies to your family picture</string>
-</edit-config>
-<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>Add selfies to your family picture</string>
-</edit-config>
+<access origin="https://theparcelpeople.com.au" subdomains="true" />
 </widget>

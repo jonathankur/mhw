@@ -5,14 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="mobile-web-app-capable" content="yes">
 	<title>Nutra Ventures</title>
- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+ <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 	<script src="phonegap.js"></script>
-      <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="jquery.mobile-1.4.5.min.js"></script>
 <style type="text/css">
 .embord {
   border:2px solid navy;
+}
+
+.mypg {
+  background-color:#2876BF;
 }
 
 </style>
@@ -30,51 +34,8 @@ var todobox='';
 var thisday='';
 var thisstart=0;
 var thisremind=0;
-
-
-  var notificationOpenedCallback = function(jsonData) {
-  };
-
-
-function getonestatus()
-{   window.plugins.OneSignal
-    .startInit("03de48cd-4a34-4874-bc5a-47f405890489")
-    .handleNotificationOpened(notificationOpenedCallback)
-    .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
-    .endInit();
-
-  window.plugins.OneSignal.getPermissionSubscriptionState(function(status) {
-      var ss = status.subscriptionStatus.userId;
-     if ((ss!=null) && (ss.length>0)) savePush(ss);
-      else {
-       if (--keeptrying>0)
-         setTimeout(getonestatus(),1000);
-      }
-  }); 
-}
-
-function savePush(s)
-{ url='http://famclub.com.au/savepush.php?pushid='+s+'&id='+me;
-  $.ajax({url: url, 
-    success : function(result) {
-    }
-  });
-}
-
-function asubmit()
-{ var url='http://famclub.com.au/asave.php';
-  var data = {
-     member : me,
-     family : thisfam,
-     qlist : $("#qlist").val(),
-     why : $("#why").val()
-  };
-  $.post(url,data)
-  .done(function(result) {
-     goact();
-  });
-}
-
+var admin=0;
+var numlines=0;
 
 $(document).ready(function () {
    var lme='';
@@ -87,6 +48,7 @@ $(document).ready(function () {
   }
   if (lme.length) {
     me=lme;
+    
     showmenu();
   }
  
@@ -103,28 +65,309 @@ window.localStorage.removeItem('me');
 function showmenu()
 {  
    $("#showmyname").html(window.localStorage.getItem('myname')); 
+   if (window.localStorage.getItem('admin')=='1') 
+    $("#adminf").show();
+   else
+    $("#adminf").hide();
+
    jQuery.mobile.changePage("#menupage", {transition: "flip"});
 }
 
 
+function porders(mode)
+{  $("#info").html('Loading...');
+   $("#infohead").html('Items to Order');
+   $("#info").css('backgroundColor','#2876BF');
+   jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvporders.php?mode='+mode;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+
+    }
+   });
+}
+
+
+
+function lowstock(mode)
+{  $("#info").html('Loading...');
+   $("#infohead").html('Low Stock Items');
+   $("#info").css('backgroundColor','#2876BF');
+   jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvlowstock.php?mode='+mode;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+
+    }
+   });
+}
+
+
+function dolitem(a)
+{  $("#info").html('Loading...');
+   $("#infohead").html('Process Item');
+   $("#info").css('backgroundColor','white');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvldoitem.php?id='+a;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+
+    }
+   });
+}
+
+function dolorder(a)
+{
+   $("#info").html('Loading...');
+   $("#infohead").html('Process Item');
+   $("#info").css('backgroundColor','white');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvorderitem.php?id='+a+'&qty='+jqo;
+   $.ajax({url: url, 
+    success : function(result) {
+      lowstock(0);
+    }
+   });
+}
+
+function showorders()
+{  $("#info").html('Loading...');
+   $("#infohead").html('Current Orders');
+   $("#info").css('backgroundColor','white');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvorders.php';
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+
+    }
+   });
+}
+
+function doitem(a)
+{  $("#info").html('Loading...');
+   $("#infohead").html('Process Item');
+   $("#info").css('backgroundColor','white');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvdoitem.php?id='+a;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+
+    }
+   });
+}
+
+function doorder(a)
+{
+   $("#info").html('Loading...');
+   $("#infohead").html('Process Item');
+   $("#info").css('backgroundColor','white');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvorderitem.php?id='+a+'&qty='+jqo;
+   $.ajax({url: url, 
+    success : function(result) {
+      porders(0);
+    }
+   });
+}
+
+function choosesupplier()
+{
+   $("#info").html('Loading...');
+   $("#infohead").html('Choose Supplier');
+   $("#info").css('backgroundColor','#2876BF');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvchoosesup.php';
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+
+    }
+   });
+}
+
+
+function dosave(a)
+{  thissendto=a;
+
+   $("#info").html('Loading...');
+   $("#infohead").html('Confirm SO');
+   $("#info").css('backgroundColor','white');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvconfirm.php?sup='+a;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+    }
+   });
+}
+
+function soorder()
+{ 
+
+   $("#info").html('Loading...');
+   $("#infohead").html('Final Stock Orders');
+   $("#info").css('backgroundColor','#2876BF');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvsoorder.php?me='+me;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+    }
+   });
+}
+
+function reports()
+{ 
+
+   url='https://theparcelpeople.com.au/catalogue/server/nvreports.php?me='+me;
+   $.ajax({url: url, 
+    success : function(result) {
+      jQuery.mobile.changePage("#reppage", {transition: "flip"});
+      j=result.split('~');
+      $("#fromday").val(j[0]);
+      $("#frommonth").val(j[1]);
+      $("#fromyear").val(j[2]);
+      $("#today").val(j[3]);
+      $("#tomonth").val(j[4]);
+      $("#toyear").val(j[5]);
+      $("#remail").html(j[6]);
+      var sz=j.length;
+      $("#supplier").empty();
+      for (i=8; i<sz; i++) 
+        $("#supplier").append(j[i]);
+      $("#supplier").val(j[7]);
+      $("#supplier").trigger('create');
+
+    }
+   });
+}
+
+function dorep(d)
+{  url='https://theparcelpeople.com.au/catalogue/server/nvdorep.php?me='+me+'&data='+d;
+   $.ajax({url: url, 
+    success : function(result) {
+          showmenu();
+    }
+   });
+}
+
+function reallydosave()
+{ 
+   $("#info").html('Saving...');
+
+   url='https://theparcelpeople.com.au/catalogue/server/nvsave.php?sup='+thissendto;
+   $.ajax({url: url, 
+    success : function(result) {
+      porders(1); 
+    }
+   });
+}
+
+
+function pending()
+{ 
+   $("#info").html('Loading...');
+   $("#infohead").html('Pending Stock Orders');
+   $("#info").css('backgroundColor','#2876BF');
+
+    jQuery.mobile.changePage("#infopage", {transition: "flip"});
+   url='https://theparcelpeople.com.au/catalogue/server/nvpending.php?me='+me;
+   $.ajax({url: url, 
+    success : function(result) {
+      $("#info").html(result);
+      $("#info").trigger('create');
+    }
+   });
+}
+
+function savesup()
+{ 
+ 
+   var ss='';
+   var dd='';
+   for (e=0; e<numlines; e++) {
+     ss=ss+document.getElementById('q'+e).value+'~';
+     dd=dd+document.getElementById('d'+e).value+'~';
+   }
+   url='https://theparcelpeople.com.au/catalogue/server/nvsavesup.php?id='+thisitem+'&qty='+ss+'&disco='+dd;
+   $.ajax({url: url, 
+    success : function(result) {
+       pending();
+    }
+   });
+}
+
+function processpend(a)
+{  thisitem=a;
+   $("#info").html('Loading...');
+   sback=0;
+   url='https://theparcelpeople.com.au/catalogue/server/nvsup.php?id='+a;
+   $.ajax({url: url, 
+    success : function(result) {
+      var l = result.split('~');
+      $("#infohead").html(l[0]);
+      $("#info").html(l[1]);
+      $("#info").trigger('create');
+      numlines = parseInt(l[2]);
+    }
+   });
+}
+
+function chngqty(a,b)
+{ var l = parseInt(document.getElementById('q'+a).value)+b;
+  if (l<0) l=0;
+  document.getElementById('q'+a).value=l;
+}
+
+function chngdisc(a)
+{ var d=1-parseInt(document.getElementById('d'+a).value);
+  document.getElementById('d'+a).value=d;
+  document.getElementById('dd'+a).style.backgroundColor= (d ? '#FFAAAA' : '');
+}
+
+function setqty(a,b)
+{
+  document.getElementById('q'+a).value=b;
+}
 
 function hideerr()
 { $("#err").hide();
 }
 
-
 function jlogin()
-{  url='http://theparcelpeople.com.au/catalogue/server/nvlogin.php?params='+encodeURIComponent($("#email").val()+'^'+$("#pwd").val());
+{  url='https://theparcelpeople.com.au/catalogue/server/nvlogin.php?params='+encodeURIComponent($("#email").val()+'^'+$("#pwd").val());
    $.ajax({url: url, 
     success : function(result) {
        var r = result.split('~');
-       if (r[0]=='s') {
+       if (r[0]=='1') {
            window.localStorage.setItem('me',r[1]);
            window.localStorage.setItem('myname',r[2]);
+           window.localStorage.setItem('admin',r[3]);
            me=r[1];		
            showmenu();
        }
-       if (r[0]=='e') {
+       else {
          $("#err").html(r[1]);
          $("#err").show();
          setTimeout(hideerr,1500);
@@ -145,7 +388,10 @@ function jlogin()
 <div data-role="page" id="intropage" class="mypg myback">
 
  <div role="main" class="ui-content myback">
-
+<center>
+<img src="logo.png">
+</center>
+<br><br>
 <p><input type="email" name="email" id="email" placeholder="User Name"></p>
 <p><input type="password" name="pwd" id="pwd" placeholder="Password"></p>
 <p>
@@ -158,14 +404,90 @@ function jlogin()
 
 <div data-role="page" id="menupage" class="mypg myback">
  <div role="main" class="ui-content myback">
- <a href="javascript:jlogout()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-back ui-btn-icon-notext ui-btn-right">Close</a>
-<center>
-<a href="javascript:invite();" class="ui-btn ui-corner-all">CURRENT ORDERS</a>
-<a href="javascript:invite();" class="ui-btn ui-corner-all">PURCHASE ORDERS</a>
-<a href="javascript:invite();" class="ui-btn ui-corner-all">PENDING STOCK ORDERS</a>
-<a href="javascript:invite();" class="ui-btn ui-corner-all">FINAL STOCK ORDERS</a>
+<br><br>
+<div style="background-color:#F6F6F8; padding:8px; text-align:center !important"><small>Logged in as</small><br>
+<div id="showmyname"> </div>
+</div>
+<br>
+<div style="margin:0px !important" id="adminf">
+<a href="javascript:showorders();" class="ui-btn ui-corner-all">CURRENT ORDERS</a>
+<a href="javascript:porders(1);" class="ui-btn ui-corner-all">PURCHASE ORDERS</a>
+<a href="javascript:lowstock(1);" class="ui-btn ui-corner-all">LOW STOCK ITEMS</a>
+</div>
+<a href="javascript:pending();" class="ui-btn ui-corner-all">PENDING STOCK ORDERS</a>
+<a href="javascript:soorder();" class="ui-btn ui-corner-all">FINAL STOCK ORDERS</a>
+<a href="javascript:reports();" class="ui-btn ui-corner-all">REPORTS</a>
+
+
+<br>
+<a href="javascript:jlogout();" class="ui-btn ui-corner-all">LOG OUT</a>
+
 </div>
 </div>
+
+<div data-role="page" id="infopage" class="mypg myback">
+<div data-role="header" data-fullscreen="true">
+ <div data-role="navbar" style="background-color:#2876BF">
+   <a href="javascript:showmenu()" class="ui-btn ui-corner-all ui-btn-inline ui-mini">Return</a>
+   <span style="color:white" id="infohead"> </span>
+ </div>
+</div>
+
+ <div role="main" class="ui-content myback">
+ <div id="info" style="background-color:#F8F8FF; font-size:0.8em !important">
+ </div>
+ </div>
+</div>
+
+<div data-role="page" id="reppage" class="mypg myback">
+<div data-role="header" data-fullscreen="true">
+ <div data-role="navbar" style="background-color:#2876BF">
+   <a href="javascript:showmenu()" class="ui-btn ui-corner-all ui-btn-inline ui-mini">Return</a>
+   <span style="color:white">REPORTS</span>
+ </div>
+</div>
+
+ <div role="main" class="ui-content myback">
+ <div id="rinfo" style="color:white">
+ <h2>Report on items supplied</h2>
+ <form name="jk" id="jk">
+ From:<br>
+<div class="ui-grid-b">
+ <div class="ui-block-a">
+ <label for="fromday">Day</label>
+ <input type="text" name="fromday" id="fromday">
+</div><div class="ui-block-b">
+ <label for="frommonth">Month</label>
+ <input type="text" name="frommonth" id="frommonth">
+</div><div class="ui-block-c">
+ <label for="fromyear">Year</label>
+ <input type="text" name="fromyear" id="fromyear">
+</div></div>
+ <br><br>
+ To:<br>
+ <div class="ui-grid-b">
+ <div class="ui-block-a">
+ <label for="today">Day</label>
+ <input type="text" name="today" id="today">
+ </div><div class="ui-block-b">
+ <label for="tomonth">Month</label>
+ <input type="text" name="tomonth" id="tomonth">
+ </div><div class="ui-block-c">
+ <label for="toyear">Year</label>
+ <input type="text" name="toyear" id="toyear">
+</div></div>
+<br><br>
+<label for="supplier">Supplier:</label>
+<select name="supplier" id="supplier"></select>
+<a style="background-color:lightgreen" href="javascript:dorep($('#fromday').val()+'~'+$('#frommonth').val()+'~'+$('#fromyear').val()+'~'+$('#today').val()+'~'+$('#tomonth').val()+'~'+$('#toyear').val()+'~'+$('#supplier').val());" class="ui-btn ui-corner-all">Send Report</a>
+<br>
+</form>
+Report will be sent to :-<br>
+<div name="remail" id="remail">&nbsp;</div>
+ </div>
+ </div>
+</div>
+
 
 </body>
 </html>
