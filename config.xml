@@ -2,11 +2,11 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "au.com.mhw"
-        version     = "1.0.6" >
+        version     = "1.0.7" >
 
     <!-- versionCode is optional and Android only -->
 
-    <name>MHW Suppliers</name>
+    <name>MHW Portal</name>
 
     <description>
         Supplier Portal
@@ -15,6 +15,12 @@
     <author href="https://famclub.com.au" email="famclubmessage@gmail.com">
         Jonathan Kur 
     </author>
+
+<access origin="http://code.jquery.com" subdomains="true" />
+<access origin="http://jquery.com" subdomains="true" />
+<access origin="http://theparcelpeople.com.au" subdomains="true" />
+<access origin="https://theparcelpeople.com.au" subdomains="true" />
+
 <platform name="ios">
 <icon src="res/icon/ios/icon-1024.png" width="1024" height="1024"/>
 <icon src="res/icon/ios/icon-small.png" width="29" height="29"/>
@@ -74,7 +80,5 @@
         <variable name="ANDROID_SUPPORT_VERSION" value="26.+" />
     </plugin>
 
-<access origin="http://code.jquery.com" subdomains="true" />
-<access origin="http://theparcelpeople.com.au" subdomains="true" />
-<access origin="https://theparcelpeople.com.au" subdomains="true" />
+
 </widget>
