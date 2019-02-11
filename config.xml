@@ -2,11 +2,11 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "au.com.mhw"
-        version     = "1.1.7" >
+        version     = "1.1.6" >
 
     <!-- versionCode is optional and Android only -->
 
-    <name>MHW Portal</name>
+    <name>MHW Suppliers</name>
 
     <description>
         Supplier Portal
@@ -15,12 +15,6 @@
     <author href="https://famclub.com.au" email="famclubmessage@gmail.com">
         Jonathan Kur 
     </author>
-<preference name="phonegap-version" value="cli-8.0.0" />
-<access origin="http://code.jquery.com" subdomains="true" />
-<access origin="http://jquery.com" subdomains="true" />
-<access origin="http://theparcelpeople.com.au" subdomains="true" />
-<access origin="https://theparcelpeople.com.au" subdomains="true" />
-
 <platform name="ios">
 <icon src="res/icon/ios/icon-1024.png" width="1024" height="1024"/>
 <icon src="res/icon/ios/icon-small.png" width="29" height="29"/>
@@ -51,8 +45,6 @@
 <splash src="res/screen/ios/Default@2x~ipad~comany.png"/>
 </platform>
 <platform name="android">
-<preference name="android-build-tool" value="gradle" />
-<preference name="android-minSdkVersion" value="16" />
 <preference name="SplashMaintainAspectRatio" value="true"/>
 <preference name="SplashShowOnlyFirstTime" value="true"/>
 <icon density="ldpi" src="res/icon/android/ldpi.png"/>
@@ -71,11 +63,17 @@
 </platform>
 
 <!-- Requires cli-8.0.0 but we recommend using the latest version. -->
+<preference name="phonegap-version" value="cli-8.0.0" />
 
-<plugin name="cordova-plugin-whitelist" source="npm">
+<preference name="android-build-tool" value="gradle" />
+<preference name="android-minSdkVersion" value="16" />
+
+<plugin name="cordova-plugin-whitelist" source="npm" />
   <plugin name="cordova-android-support-gradle-release" source="npm">
         <variable name="ANDROID_SUPPORT_VERSION" value="26.+" />
     </plugin>
 
-
+<access origin="http://code.jquery.com" subdomains="true" />
+<access origin="http://theparcelpeople.com.au" subdomains="true" />
+<access origin="https://theparcelpeople.com.au" subdomains="true" />
 </widget>
