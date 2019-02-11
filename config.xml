@@ -16,7 +16,8 @@
         Jonathan Kur 
     </author>
 <preference name="phonegap-version" value="cli-8.0.0" />
-
+<allow-navigation href="*" />
+    <allow-intent href="*" />
 <access origin="http://code.jquery.com" subdomains="true" />
 <access origin="http://jquery.com" subdomains="true" />
 <access origin="http://theparcelpeople.com.au" subdomains="true" />
@@ -73,7 +74,7 @@
 
 <!-- Requires cli-8.0.0 but we recommend using the latest version. -->
 
-<plugin name="cordova-plugin-whitelist" source="npm" />
+<gap:plugin name=cordova-plugin-whitelist source=npm>
   <plugin name="cordova-android-support-gradle-release" source="npm">
         <variable name="ANDROID_SUPPORT_VERSION" value="26.+" />
     </plugin>
