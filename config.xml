@@ -2,7 +2,7 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "au.com.mhw"
-        version     = "1.0.7" >
+        version     = "1.1.7" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -74,7 +74,7 @@
 
 <!-- Requires cli-8.0.0 but we recommend using the latest version. -->
 
-<gap:plugin name=cordova-plugin-whitelist source=npm>
+<plugin name="cordova-plugin-whitelist" source="npm">
   <plugin name="cordova-android-support-gradle-release" source="npm">
         <variable name="ANDROID_SUPPORT_VERSION" value="26.+" />
     </plugin>
