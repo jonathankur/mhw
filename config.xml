@@ -73,7 +73,6 @@
 
 <!-- Requires cli-8.0.0 but we recommend using the latest version. -->
 
-<plugin name="cordova-plugin-splashscreen" source="npm" />
 <plugin name="cordova-plugin-whitelist" source="npm" />
   <plugin name="cordova-android-support-gradle-release" source="npm">
         <variable name="ANDROID_SUPPORT_VERSION" value="26.+" />
